@@ -1,8 +1,13 @@
 import { Html } from "@elysiajs/html";
-const App = (props: Html.PropsWithChildren) => {
+import { liveReloadScript } from "../../hotreloadWeb";
+import { config } from "@config/index";
+
+const safeScript = config.env.NODE_ENV === "devlopment" ? liveReloadScript() : "";
+
+const Base = (props: Html.PropsWithChildren) => {
   return (
     <>
-      <html lang="en">
+      <html lang="en" class="dark">
         <head>
           <meta charset="UTF-8" />
           <meta
@@ -11,26 +16,27 @@ const App = (props: Html.PropsWithChildren) => {
           />
           <title>Document</title>
           <link rel="stylesheet" href="/public/dist/index.css" />
-          <script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous" />
+          <script
+            src="https://unpkg.com/htmx.org@1.9.10"
+            integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+            crossorigin="anonymous"
+          />
+          <script>{safeScript}</script>
+          <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+          />
         </head>
-        <body id="body" />
+
+        <body
+          hx-boost={true}
+          class="min-h-screen w-full bg-background p-2 text-foreground"
+        >
+          {props.children}
+        </body>
       </html>
-      <h1
-        onclick="ddd"
-        class="bg-red-200 text-gray-500"
-      >
-        Hellow World
-      </h1>
-      <button
-        hx-get="/api/data"
-        hx-trigger="click"
-        hx-target="#data"
-        class="bg-blue-600 px-2 py-1 m-4 hover:bg-blue-800 rounded-md text-white"> Click me</button>
-      <p id={"data"} >
-        data
-      </p>
     </>
   );
 };
 
-export default App;
+export default Base;
