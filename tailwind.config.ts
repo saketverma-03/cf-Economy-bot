@@ -10,6 +10,7 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: { geist: ["geist", "sans"] },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

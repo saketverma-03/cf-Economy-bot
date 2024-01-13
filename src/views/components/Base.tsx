@@ -1,8 +1,9 @@
 import { Html } from "@elysiajs/html";
-import { liveReloadScript } from "../../hotreloadWeb";
+import { liveReloadScript } from "../../reload";
 import { config } from "@config/index";
 
-const safeScript = config.env.NODE_ENV === "devlopment" ? liveReloadScript() : "";
+const safeScript =
+  config.env.NODE_ENV === "devlopment" ? liveReloadScript() : "";
 
 const Base = (props: Html.PropsWithChildren) => {
   return (
@@ -29,8 +30,8 @@ const Base = (props: Html.PropsWithChildren) => {
         </head>
 
         <body
-          hx-boost={true}
-          class="min-h-screen w-full bg-background p-2 text-foreground"
+          hx-boost="true"
+          class="min-h-screen font-geist w-full bg-background p-2 text-foreground flex flex-col items-center "
         >
           {props.children}
         </body>
