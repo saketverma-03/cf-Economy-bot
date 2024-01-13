@@ -10,5 +10,8 @@ dbConnect().then(() => {
         console.log("🦊 Triggering Live Reload");
       }
     })
+    .onStart(() => {
+      config.healthCheck()
+    })
     .listen(3000, () => console.log("STARTED: 3000"));
 })
