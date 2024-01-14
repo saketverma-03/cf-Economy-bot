@@ -1,6 +1,5 @@
 const env = {
   NODE_ENV: process.env.NODE_ENV || "",
-  MONGO_URI: process.env.MONGO_URI || ""
 };
 
 /**
@@ -8,15 +7,16 @@ const env = {
  *  NOTE: will through error if boolean false is set to some env,
  * */
 function handleEnvCheck() {
-  for (const property in env) {
-    if (!env[property]) {
-      console.error(`${property}: ${object[property]}`);
-      throw new Error(`in .env "${property}" is missing`)
-    }
+  const envArray = Object.values(env)
+  for (let i = 0; i < envArray.length; i++) {
+    if (!envArray[i])
+      throw new Error(`missing env value at index ${i}`)
   }
+
+
   console.log("ENV Check Passed")
 }
-
+handleEnvCheck()
 export const config = {
   env,
   healthCheck: handleEnvCheck
