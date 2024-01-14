@@ -1,5 +1,5 @@
 import { Html } from "@elysiajs/html";
-import { liveReloadScript } from "../../reload";
+import { liveReloadScript } from "../../../reload";
 import { config } from "@config/index";
 
 const safeScript =

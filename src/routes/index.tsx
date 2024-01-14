@@ -23,6 +23,6 @@ const app = new Elysia()
         <HomePage />
       </Base>
     );
-  })
-  .use(dashboardRoute)
+  }).group('/dashboard', (route) => route.use(dashboardRoute))
+
 export default app;

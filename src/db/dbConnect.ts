@@ -11,10 +11,7 @@ async function dbConnect(): Promise<void> {
   try {
     console.log("Connecting to MongoDB...");
     mongoose.set("strictQuery", false);
-    await mongoose.connect(config.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    } as mongoose.ConnectOptions);
+    await mongoose.connect(config.env.MONGO_URI);
     console.log("Connected to MongoDB !\n");
     mongoose.connection.on("error", (error: Error) => {
       console.error("POINT::1, Error While exicuting dbConnect()", error);
