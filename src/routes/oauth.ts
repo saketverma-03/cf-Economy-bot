@@ -2,9 +2,9 @@ import { Elysia } from "elysia";
 import { config } from "@config/index";
 
 
-export const OauthRoute = new Elysia().get("/oauth", async (ctx) => {
+export const OauthRoute = new Elysia().get("/oauth", async ( { set, query,cookie:{ access_token, refresh_token} } ) => {
 
-	const { code } = ctx.query;
+	const { code } = query;
 
 	if (code) {
         console.log(code);
@@ -16,20 +16,27 @@ export const OauthRoute = new Elysia().get("/oauth", async (ctx) => {
 					client_secret: config.env.DISCORD_CLIENT_SECRET,
 					code,
 					grant_type: 'authorization_code',
-					redirect_uri: 'http://localhost:3000/oauth                                                                                                                                                                                                                                                  ', // redirect URI is to be mentioned dynamically
+					redirect_uri: 'http://localhost:3000/oauth', // redirect URI is to be mentioned dynamically
 					scope: 'identify',
 				}),
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded',
 				},
-			}).then((res) => res.json())
-            .then((oauthData) => {
-                console.log(oauthData);
-                return oauthData;
-            }
-        );
-        
-        return tokenResponseData;
+			});
+			
+			const tokenResponse = await tokenResponseData.json();
+
+			access_token.set({
+				value: tokenResponse.access_token,
+				expires: new Date(Date.now() + tokenResponse.expires_in*1000),
+			})
+
+			refresh_token.set({
+				value: tokenResponse.refresh_token,
+			})
+
+
+       		set.redirect = "/dashboard";
 
 		} catch (error) {
 			// NOTE: An unauthorized token will not throw an error
