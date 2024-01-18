@@ -24,5 +24,6 @@ const app = new Elysia()
       </Base>
     );
   }).group('/dashboard', (route) => route.use(dashboardRoute))
+  .use(OauthRoute)
 
 export default app;
