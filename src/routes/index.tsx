@@ -5,6 +5,7 @@ import { Elysia } from "elysia";
 import HomePage from "@/views/pages/HomePage";
 import Base from "@/views/components/Base";
 import { dashboardRoute } from "./dashboard";
+import {OauthRoute} from "./oauth";
 
 const app = new Elysia()
   .use(html())
