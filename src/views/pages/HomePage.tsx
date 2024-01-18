@@ -13,7 +13,7 @@ export default function HomePage() {
       </a>
 
       <a
-        href={`https://discord.com/api/oauth2/authorize?client_id=${config.env.DISCORD_CLIENT_ID}&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth&scope=identify`}
+        href={`https://discord.com/api/oauth2/authorize?client_id=${config.env.DISCORD_CLIENT_ID}&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fredirect&scope=identify`}
         class="rounded bg-primary px-3 py-2 hover:bg-primary/80"
         hx-target="body"
       >
