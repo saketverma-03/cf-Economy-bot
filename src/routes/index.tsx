@@ -5,6 +5,10 @@ import { Elysia } from "elysia";
 import HomePage from "@/views/pages/HomePage";
 import Base from "@/views/components/Base";
 import { dashboardRoute } from "./dashboard";
+import { OauthRoute } from "./oauth";
+import { errorHandler } from "@/middlewares/errorHandler";
+import { errors } from "@/middlewares/errorHandler/types";
+
 
 const app = new Elysia()
   .use(html())
@@ -15,6 +19,8 @@ const app = new Elysia()
       secret: "12345",
     }),
   )
+  .error(errors)
+  .onError(errorHandler)
   .get("/", async ({ jwt, cookie: { name } }) => {
     const token = await jwt.sign({ name: "saketverma" });
     name.value = token;
@@ -23,6 +29,7 @@ const app = new Elysia()
         <HomePage />
       </Base>
     );
-  })
-  .use(dashboardRoute)
+  }).group('/dashboard', (route) => route.use(dashboardRoute))
+  .use(OauthRoute)
+
 export default app;

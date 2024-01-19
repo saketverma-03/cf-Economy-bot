@@ -3,7 +3,7 @@ import Dashboard from "@/views/pages/Dashboard";
 import { Elysia } from "elysia";
 
 
-export const dashboardRoute = new Elysia().get("/dashboard", (ctx) => {
+export const dashboardRoute = new Elysia().get("/", (ctx) => {
   const { headers } = ctx;
   if (headers["HX-Boosted"]) {
     return <Dashboard />;
