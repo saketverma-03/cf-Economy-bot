@@ -1,15 +1,17 @@
-# Elysia with Bun runtime
+# Discord Economybot by Clanflare
 
 ## Getting Started
-To get started with this template, simply paste this command into your terminal:
 ```bash
-bun create elysia ./elysia-example
+bun run dev # starts dev server at 3000
 ```
-
-## Development
-To start the development server run:
-```bash
-bun run dev
-```
-
 Open http://localhost:3000/ with your browser to see the result.
+
+# Contribution Guidlines
+
+- Create a branch from devlopment (or any other branch if needed) wit apropriate name,
+- this branch should only contain the feature/fix/etc you are working on
+
+## configration Todo: 
+- implement prettier ??
+
+
