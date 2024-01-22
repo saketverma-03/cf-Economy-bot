@@ -7,9 +7,11 @@ type ErrorHandlerContext = Context & {
 }
 
 export const errorHandler = ({ code, error, set }: ErrorHandlerContext) => {
+  console.log("in error block")
+  console.log(error.message)
   switch (code) {
     case "AuthenticationError":
-      Response.json({ message: error.message })
+      set.redirect = "/"
       break;
 
     default:

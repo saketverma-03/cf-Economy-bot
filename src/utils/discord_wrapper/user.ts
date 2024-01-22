@@ -28,3 +28,4 @@ export const getUserDataFromToken = async (accessToken: string): Promise<IUserDa
   return res.json() as PromiseLike<IUserDataResponse>
 }
 
+
