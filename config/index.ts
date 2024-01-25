@@ -1,8 +1,10 @@
 const env = {
-  NODE_ENV: process.env.NODE_ENV || "",
-  MONGO_URI: process.env.MONGO_URI || "",
-  DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID || "",
-  DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET || "",
+    NODE_ENV: process.env.NODE_ENV || '',
+    MONGO_URI: process.env.MONGO_URI || '',
+    DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID || '',
+    DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET || '',
+    BOT_TOKEN: process.env.BOT_TOKEN || '',
+    BASE_DISCORD_URL: 'https://discord.com/api/v10',
 };
 
 /**
@@ -10,17 +12,15 @@ const env = {
  *  NOTE: will through error if boolean false is set to some env,
  * */
 function handleEnvCheck() {
-  const envArray = Object.values(env)
-  for (let i = 0; i < envArray.length; i++) {
-    if (!envArray[i])
-      throw new Error(`missing env value at index ${i}`)
-  }
+    const envArray = Object.values(env);
+    for (let i = 0; i < envArray.length; i++) {
+        if (!envArray[i]) throw new Error(`missing env value at index ${i}`);
+    }
 
-
-  console.log("ENV Check Passed")
+    console.log('ENV Check Passed');
 }
-handleEnvCheck()
+handleEnvCheck();
 export const config = {
-  env,
-  healthCheck: handleEnvCheck
+    env,
+    healthCheck: handleEnvCheck,
 };
