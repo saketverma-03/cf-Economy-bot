@@ -1,6 +1,5 @@
 // copied from GFG
 export default function cookieParser(cookieString: string) {
-    console.log('COOKE: ', cookieString);
     if (cookieString === '') return {};
     const pairs = cookieString.split(';');
     const splittedPairs = pairs.map((cookie) => cookie.split('='));
