@@ -1,18 +1,73 @@
 //
 
-import { Guild } from '@/utils/discord_wrapper/user';
+import {
+    discordImage,
+    generateBotInviteLink,
+} from '@/utils/discord_wrapper/general';
+import { Guild, isGuildAdmmin } from '@/utils/discord_wrapper/user';
+import { config } from '@config/index';
 
 export default function Page({ guilds }: { guilds: Guild[] }) {
     return (
         <>
             <main>
-                <div>Hellow this is it</div>
-                <ul>
-                    {guilds.map((item) => (
-                        <li>{item.name}</li>
-                    ))}
+                <div class={'text-3xl my-8'}>Select Server</div>
+                <ul class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {guilds.map(
+                        (item) =>
+                            isGuildAdmmin(item.permissions) && (
+                                <ServerCard guild={item} />
+                            ),
+                    )}
+                    {guilds.map(
+                        (item) =>
+                            !isGuildAdmmin(item.permissions) && (
+                                <ServerCard guild={item} />
+                            ),
+                    )}
                 </ul>
             </main>
         </>
     );
 }
+
+const ServerCard = ({ guild }: { guild: Guild }) => {
+    const { id, name, icon, permissions } = guild;
+    const isAdmin = isGuildAdmmin(permissions);
+
+    return (
+        <>
+            <a
+                href={generateBotInviteLink(config.env.DISCORD_CLIENT_ID, id)}
+                class={`bg-zinc-800 p-2 gap-4 rounded flex items-center border border-transparent gra hover:border-primary  ${isAdmin ? ' ' : 'pointer-events-none'} `}
+            >
+                <div
+                    class={`h-16 w-16 grid place-items-center ${isAdmin ? '' : 'grayscale opacity-50'}`}
+                >
+                    {icon ? (
+                        <img
+                            loading="lazy"
+                            src={discordImage.getGuildIcon(id, icon)}
+                            class="rounded"
+                            alt=""
+                        />
+                    ) : (
+                        <div class="h-full w-full rounded grid place-items-center bg-zinc-900">
+                            {name[0] + name[2]}
+                        </div>
+                    )}
+                </div>
+                <div>
+                    <p class={`${isAdmin ? '' : 'opacity-50'}`}>{name}</p>
+                    <div
+                        class={'text-yellow-700 text-sm hover:text-yellow-500'}
+                    >
+                        {!isGuildAdmmin(permissions)
+                            ? 'No Admin Permissions for this Server'
+                            : ''}
+                    </div>
+                </div>
+            </a>
+        </>
+    );
+};
