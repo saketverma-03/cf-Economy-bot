@@ -1,17 +1,15 @@
+import mongoose, { InferSchemaType } from 'mongoose';
 
-import mongoose, { InferSchemaType } from "mongoose"
+const TransactionSchema = new mongoose.Schema(
+    {
+        guildId: String,
+        from: String,
+        to: String,
+        ammount: String,
+    },
+    { timestamps: true },
+);
 
-const TransactionSchema = new mongoose.Schema({
-  guildId: String,
-  from: String,
-  to: String,
-  ammount: String
-},
-  { timestamps: true }
-)
+export type Transaction = InferSchemaType<typeof TransactionSchema>;
 
-export type Transaction = InferSchemaType<typeof TransactionSchema>
-
-
-export default mongoose.model<Transaction>("transaction", TransactionSchema);
-
+export default mongoose.model<Transaction>('transaction', TransactionSchema);

@@ -1,4 +1,3 @@
-
 /*
 NOTE: Elysia in built errors,
 1. NOT_FOUND
@@ -10,17 +9,14 @@ ref: https://elysiajs.com/life-cycle/on-error.html
  */
 
 export class AuthenticationError extends Error {
-  constructor(public message: string) {
-    super(message)
-  }
+    constructor(public message: string) {
+        super(message);
+    }
 }
-
-
-
 
 /**
  * Custom Errors for .error() middleware
  * */
 export const errors = {
-  AuthenticationError
-}
+    AuthenticationError,
+};
