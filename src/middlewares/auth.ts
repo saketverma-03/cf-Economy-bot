@@ -4,14 +4,14 @@ import { IUserDataResponse } from '@/utils/discord_wrapper/user';
 import { getAccessTokenFromRefreshToken } from '@/utils/discord_wrapper/oauth';
 import cookieParser from '@/utils/cookieParser';
 
-export const isAuthenticated = async (
-    ctx: Context & { params: Record<never, string> },
-) => {
+export interface ContextBeforeHandle extends Omit<Context, 'params'> {
+    params: Record<never, string>;
+}
+export const isAuthenticated = async (ctx: ContextBeforeHandle) => {
     if (!ctx.headers.cookie) {
         return (ctx.set.status = 'Unauthorized');
     }
     const { refresh_token, access_token } = cookieParser(ctx.headers.cookie);
-    console.log('TOKEN:', refresh_token, access_token);
 
     if (!refresh_token) {
         throw new AuthenticationError('AuthenticationError from middleware1');
@@ -41,3 +41,12 @@ export type user = Omit<
     | 'verified'
     | 'discriminator'
 >;
+
+export function isGuildIdInCookie(ctx: ContextBeforeHandle) {
+    const { cookie } = ctx.headers;
+    if (!cookie) return (ctx.set.redirect = '/');
+
+    const cookies = cookieParser(cookie);
+
+    if (!cookies.guildid) return (ctx.set.redirect = '/select-server');
+}
