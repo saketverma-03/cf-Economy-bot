@@ -7,13 +7,13 @@ export const discordImage = {
         guildId: string | number,
         guildBannerImage: string | number,
     ) =>
-        `https://cdn.discordapp.com/banners/${guildId}/${guildBannerImage}.WebP `,
+        `https://cdn.discordapp.com/banners/${guildId}/${guildBannerImage}.webp `,
 
     getUserAvatar: (userId: string | number, avatarId: string | number) =>
-        `https://cdn.discordapp.com/avatars/${userId}/${avatarId}.WebP `,
+        `https://cdn.discordapp.com/avatars/${userId}/${avatarId}.webp `,
 
     getRoleIcon: (roleId: string | number, roleIcon: string | number) =>
-        `https://cdn.discordapp.com/role-icons/${roleId}/${roleIcon}.WebP `,
+        `https://cdn.discordapp.com/role-icons/${roleId}/${roleIcon}.webp `,
 };
 
 export const generateBotInviteLink = (clinetId: string, guildId: string) => {
