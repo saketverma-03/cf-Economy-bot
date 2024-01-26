@@ -1,24 +1,50 @@
-import { isAuthenticated } from '@/middlewares/auth';
-import cookieParser from '@/utils/cookieParser';
+import { isAuthenticated, isGuildIdInCookie } from '@/middlewares/auth';
 import Base from '@/views/components/Base';
+import NavBar from '@/views/components/NavBar';
 import Dashboard from '@/views/pages/Dashboard';
-import { Elysia } from 'elysia';
+import { Elysia, t } from 'elysia';
+
+const route = new Elysia();
+route.get('/', (ctx) => {
+    const { headers } = ctx;
+    if (headers['hx-boosted']) {
+        return (
+            <>
+                <NavBar />
+                <Dashboard />
+            </>
+        );
+    }
+    return (
+        <Base>
+            <NavBar />
+            <Dashboard />
+        </Base>
+    );
+});
+
+route.get(
+    '/redirect',
+    ({ query, cookie, set }) => {
+        cookie.guildId.set({
+            value: query.id,
+        });
+
+        set.redirect = '/dashboard';
+    },
+    {
+        query: t.Object({
+            id: t.String(),
+        }),
+    },
+);
 
 export const dashboardRoute = new Elysia().guard(
     {
-        // @ts-ignore
-        beforeHandle: isAuthenticated,
+        beforeHandle: (ctx) => {
+            isGuildIdInCookie(ctx);
+            isAuthenticated(ctx);
+        },
     },
-    (app) =>
-        app.get('/', (ctx) => {
-            const { headers } = ctx;
-            if (headers['HX-Boosted']) {
-                return <Dashboard />;
-            }
-            return (
-                <Base>
-                    <Dashboard />
-                </Base>
-            );
-        }),
+    (app) => app.use(route),
 );

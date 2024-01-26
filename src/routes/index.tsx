@@ -8,6 +8,8 @@ import { OauthRoute } from './oauth';
 import { errorHandler } from '@/middlewares/errorHandler';
 import { errors } from '@/middlewares/errorHandler/types';
 import { selectServerRoute } from './select-server';
+import { onBoardRoute } from './onbard';
+import { botSettingsRoute } from './bot-settings.jsx';
 
 const app = new Elysia()
     .use(html())
@@ -23,6 +25,8 @@ const app = new Elysia()
     })
     .group('/dashboard', (route) => route.use(dashboardRoute))
     .group('/select-server', (route) => route.use(selectServerRoute))
+    .group('/onboard', (route) => route.use(onBoardRoute))
+    .group('/bot-settings', (route) => route.use(botSettingsRoute))
     .use(OauthRoute);
 
 export default app;
