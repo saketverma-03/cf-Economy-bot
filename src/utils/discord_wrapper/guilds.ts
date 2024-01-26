@@ -6,9 +6,20 @@
  *
  * **/
 
-export const getGuildDetails = async (botToken: string) => {
+export const getGuildDetails = async (botToken: string, guildId: string) => {
+    const res = await fetch(`https://discord.com/api/v10/guilds/${guildId}`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bot ${botToken}`,
+        },
+    });
+    if (!res.ok) return {};
+    return res.json();
+};
+
+export const getGuildMembers = async (botToken: string, guildId: string) => {
     const res = await fetch(
-        'https://discord.com/api/v10/guilds/1170627136059609118',
+        `https://discord.com/api/v10/guilds/${guildId}/members`,
         {
             method: 'GET',
             headers: {
@@ -16,17 +27,6 @@ export const getGuildDetails = async (botToken: string) => {
             },
         },
     );
-    if (!res.ok) return {};
-    return res.json();
-};
-
-export const getGuildMembers = async (botToken: string) => {
-    const res = await fetch('https://discord.com/api/v10/guilds/members', {
-        method: 'GET',
-        headers: {
-            Authorization: `Bot ${botToken}`,
-        },
-    });
     if (!res.ok) return [];
     return res.json();
 };
