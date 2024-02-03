@@ -15,7 +15,7 @@
     "@elysiajs/static": "^0.8.1",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
-    "elysia": "^0.8.9",
+    "elysia": "^0.8.15",
     "mongoose": "^8.0.4"
   },
   "devDependencies": {

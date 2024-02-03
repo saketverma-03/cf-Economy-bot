@@ -2,33 +2,36 @@ import { Context } from 'elysia';
 import { AuthenticationError } from './errorHandler/types';
 import { IUserDataResponse } from '@/utils/discord_wrapper/user';
 import { getAccessTokenFromRefreshToken } from '@/utils/discord_wrapper/oauth';
-import cookieParser from '@/utils/cookieParser';
 
 export interface ContextBeforeHandle extends Omit<Context, 'params'> {
     params: Record<never, string>;
 }
 export const isAuthenticated = async (ctx: ContextBeforeHandle) => {
-    if (!ctx.headers.cookie) {
-        return (ctx.set.status = 'Unauthorized');
-    }
-    const { refresh_token, access_token } = cookieParser(ctx.headers.cookie);
+    const { cookie, set, headers, request } = ctx;
+    const { refresh_token, access_token } = cookie;
+    //@ts-ignore
+    const reqPath = `${request.url?.split(headers.host)[1]}`;
 
-    if (!refresh_token) {
+    if (!refresh_token.get()) {
         throw new AuthenticationError('AuthenticationError from middleware1');
     }
 
-    if (!access_token) {
-        const tokenData = await getAccessTokenFromRefreshToken(refresh_token);
+    if (!access_token.get()) {
+        const tokenData = await getAccessTokenFromRefreshToken(
+            refresh_token.get(),
+        );
+        console.log(tokenData);
         if (!tokenData) throw new AuthenticationError('Cant get refresh token');
-        console.log({ tokenData });
         ctx.cookie.access_token.set({
             value: tokenData.access_token,
             expires: new Date(Date.now() + tokenData.expires_in * 1000),
+            path: '/',
         });
         ctx.cookie.refresh_token.set({
             value: tokenData.refresh_token,
+            path: '/',
         });
-        return (ctx.set.redirect = '/dashboard');
+        return (set.redirect = reqPath);
     }
 };
 
@@ -43,10 +46,6 @@ export type user = Omit<
 >;
 
 export function isGuildIdInCookie(ctx: ContextBeforeHandle) {
-    const { cookie } = ctx.headers;
-    if (!cookie) return (ctx.set.redirect = '/');
-
-    const cookies = cookieParser(cookie);
-
-    if (!cookies.guildid) return (ctx.set.redirect = '/select-server');
+    const { cookie } = ctx;
+    if (!cookie.guildId.get()) return (ctx.set.redirect = '/select-server');
 }

@@ -20,10 +20,7 @@ onboard.get('/', async (ctx) => {
 
 export const botSettingsRoute = new Elysia().guard(
     {
-        beforeHandle: (ctx) => {
-            isGuildIdInCookie(ctx);
-            isAuthenticated(ctx);
-        },
+        beforeHandle: (ctx) => isAuthenticated(ctx),
     },
     (app) => app.use(onboard),
 );

@@ -1,15 +1,13 @@
-import { createCommunity } from '@/db/services/communityService';
 import { isAuthenticated } from '@/middlewares/auth';
 import cookieParser from '@/utils/cookieParser';
-import { getUserData, getUserGuilds } from '@/utils/discord_wrapper/user';
+import { getUserData } from '@/utils/discord_wrapper/user';
 import Base from '@/views/components/Base';
-import SelectServer from '@/views/pages/selectServer';
 import { Elysia } from 'elysia';
 
 const onboard = new Elysia();
 
 onboard.get('/', async (ctx) => {
-    const { headers, query } = ctx;
+    const { headers } = ctx;
 
     if (!headers.cookie) {
         throw new Error('not authorised');
@@ -29,7 +27,6 @@ onboard.get('/', async (ctx) => {
 
 export const onBoardRoute = new Elysia().guard(
     {
-        // @ts-ignore
         beforeHandle: isAuthenticated,
     },
     (app) => app.use(onboard),

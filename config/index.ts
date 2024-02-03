@@ -5,6 +5,8 @@ const env = {
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET || '',
     BOT_TOKEN: process.env.BOT_TOKEN || '',
     BASE_DISCORD_URL: 'https://discord.com/api/v10',
+    OAUTH_URL: `https://discord.com/api/oauth2/authorize?client_id=${process.env.DISCORD_CLIENT_ID}&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fredirect&scope=identify+guilds+guilds.join`,
+    PORT: process.env.PORT || 3210,
 };
 
 /**
@@ -19,7 +21,6 @@ function handleEnvCheck() {
 
     console.log('ENV Check Passed');
 }
-handleEnvCheck();
 export const config = {
     env,
     healthCheck: handleEnvCheck,

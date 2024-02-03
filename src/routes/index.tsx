@@ -28,6 +28,6 @@ const app = new Elysia()
     .group('/select-server', (route) => route.use(selectServerRoute))
     .group('/onboard', (route) => route.use(onBoardRoute))
     .group('/bot-settings', (route) => route.use(botSettingsRoute))
-    .use(authRoute);
+    .group('/auth', (route) => route.use(authRoute));
 
 export default app;

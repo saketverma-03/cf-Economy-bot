@@ -3,6 +3,10 @@ import { config } from '@config/index';
 
 const route = new Elysia();
 
+route.get('/', ({ set }) => {
+    set.redirect = config.env.OAUTH_URL;
+});
+
 // dicord oAutg redirect url
 route.get(
     '/redirect',
@@ -15,7 +19,7 @@ route.get(
             client_secret: config.env.DISCORD_CLIENT_SECRET,
             code,
             grant_type: 'authorization_code',
-            redirect_uri: 'http://localhost:3000/redirect', // redirect URI is to be mentioned dynamically
+            redirect_uri: 'http://localhost:3210/auth/redirect', // redirect URI is to be mentioned dynamically
             scope: 'identify email guilds guilds.members.read guilds.join',
         }).toString();
 
@@ -36,11 +40,14 @@ route.get(
         cookie.access_token.set({
             value: tokenResponse.access_token,
             expires: new Date(Date.now() + tokenResponse.expires_in * 1000),
+            path: '/',
         });
 
         cookie.refresh_token.set({
             value: tokenResponse.refresh_token,
+            path: '/',
         });
+        console.log(tokenResponse);
 
         set.redirect = '/select-server';
     },
@@ -52,11 +59,5 @@ route.get(
 );
 
 // logoute route
-route.delete('/', ({ cookie, set }) => {
-    cookie.access_token.remove();
-    cookie.refresh_token.remove();
-    cookie.guildId.remove();
-    set.redirect = '/';
-});
 
 export default route;

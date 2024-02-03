@@ -10,9 +10,11 @@ app.onStart(() => {
 })
     .onStart(() => {
         config.healthCheck();
-        // dbConnect()
+        dbConnect();
     })
-    .listen(3000, () => console.log('STARTED: 3000'));
+    .listen(config.env.PORT, () =>
+        console.log(`Server started at ${config.env.PORT}`),
+    );
 /**
  * 
 app.onStart(() => {
