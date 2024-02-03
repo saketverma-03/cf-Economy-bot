@@ -1,4 +1,5 @@
 import { Context } from 'elysia';
+Response;
 
 type ErrorHandlerContext = Context & {
     code: string;
@@ -6,15 +7,20 @@ type ErrorHandlerContext = Context & {
 };
 
 export const errorHandler = ({ code, error, set }: ErrorHandlerContext) => {
-    console.log('in error block');
-    console.log(error.message);
+    //    console.log('ERROR HANDLER TRIGERED');
     switch (code) {
         case 'AuthenticationError':
-            set.redirect = '/';
-            break;
+            return (set.redirect = '/');
 
         default:
-            Response.json({ message: error.message, error: 'uknown error' });
-            break;
+            return Response.json(
+                {
+                    message: error.message,
+                    error: 'uknown error',
+                    hello: 'default error',
+                },
+                { status: 400 },
+            );
     }
+    console.log('ERROR', error);
 };

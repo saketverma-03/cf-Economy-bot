@@ -56,4 +56,4 @@ export const getUserGuilds = async (access_token: string): Promise<Guild[]> => {
 
 // https://discord.com/developers/docs/topics/permissions
 export const isGuildAdmmin = (permissions: number): boolean =>
-    (permissions && 0x0000000000000008) === 0x0000000000000008;
+    (permissions & 0x0000000000000008) === 0x0000000000000008;

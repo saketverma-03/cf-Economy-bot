@@ -1,5 +1,9 @@
 import { config } from '@config/index';
 
+/**
+ * TODO:
+ * Login Logout detect login functonality
+ * */
 export default function HomePage() {
     // redirect from discord page needs to be handled (access token and refresh token to be stored.)
     return (
@@ -13,7 +17,15 @@ export default function HomePage() {
             </a>
 
             <a
-                href={`https://discord.com/api/oauth2/authorize?client_id=${config.env.DISCORD_CLIENT_ID}&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fredirect&scope=identify+guilds+guilds.join`}
+                href="/auth"
+                class="rounded bg-primary px-3 py-2 hover:bg-primary/80"
+                hx-target="body"
+            >
+                Login
+            </a>
+
+            <a
+                href={` https://discord.com/api/oauth2/authorize?client_id=${config.env.DISCORD_CLIENT_ID}&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fauth%2Fredirect&scope=identify+guilds+guilds.join`}
                 class="rounded bg-primary px-3 py-2 hover:bg-primary/80"
                 hx-target="body"
             >

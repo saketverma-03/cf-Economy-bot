@@ -21,10 +21,19 @@ export const createCommunity = (props: CreateCommunityProps) => {
     tempData.guildId = '';
 
     const newCommunity = new community({
-        ...tempData,
+        _id: props.guildId,
     });
     //save to db
     return newCommunity.save();
+};
+
+export const getAllCommunityIn = (guildIds: string[]) => {
+    if (!guildIds.length) return [];
+    return community.find({
+        _id: {
+            $in: guildIds,
+        },
+    });
 };
 
 // UPDATE
