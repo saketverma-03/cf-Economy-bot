@@ -1,6 +1,8 @@
 import app from '@/routes/index';
 import { config } from '@config/index';
 import dbConnect from '@/db/dbConnect';
+import { logintoBot } from './discord';
+import { LoadCommands } from './discord/loader';
 
 app.onStart(() => {
     if (config.env.NODE_ENV === 'devlopment') {
@@ -11,6 +13,8 @@ app.onStart(() => {
     .onStart(() => {
         config.healthCheck();
         dbConnect();
+        LoadCommands('1185950578745028629');
+        logintoBot();
     })
     .listen(config.env.PORT, () =>
         console.log(`Server started at ${config.env.PORT}`),

@@ -1,13 +1,12 @@
 import { Collection } from 'discord.js';
-
-import { readdir } from 'fs/promises';
+import { readdirSync } from 'fs';
 
 export class CommandManager {
     private commands: Collection<string, any> = new Collection();
 
-    private async importCommand(filePath: string) {
+    private importCommand(filePath: string) {
         try {
-            const { default: command } = await import(filePath);
+            const { default: command } = require(filePath);
             if ("data" in command && "execute" in command) {
                 this.commands.set(command.data.name, command);
             } else {
@@ -20,8 +19,8 @@ export class CommandManager {
         }
     }
 
-    private async loadCommands() {
-        const commandFiles = await readdir("./src/discord/commands");// doubt here in handling path
+    private loadCommands() {
+        const commandFiles = readdirSync("./src/discord/commands");// doubt here in handling path
         for (const file of commandFiles) {
             this.importCommand(`./commands/${file}`);
         }
