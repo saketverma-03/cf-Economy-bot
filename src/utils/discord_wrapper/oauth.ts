@@ -1,3 +1,4 @@
+import { AuthenticationError } from '@/middlewares/errorHandler/types';
 import { config } from '@config/index';
 
 export interface IRefreshedTokenRes {
@@ -30,7 +31,9 @@ export const getAccessTokenFromRefreshToken = async (
     });
 
     if (!res.ok) {
-        console.log({ res });
+        throw new AuthenticationError(
+            'failed get new tokens form discord , Error in res',
+        );
         return;
     }
 
