@@ -3,8 +3,8 @@ import { config } from '@config/index';
 
 const route = new Elysia();
 
-route.get('/', ({ set }) => {
-    set.redirect = config.env.OAUTH_URL;
+route.get('/', ({ set, headers }) => {
+    return (set.headers['HX-Redirect'] = config.env.OAUTH_URL);
 });
 
 // dicord oAutg redirect url
@@ -57,6 +57,14 @@ route.get(
         }),
     },
 );
+
+route.delete('/', (ctx) => {
+    const { cookie, set } = ctx;
+    cookie.access_token.remove({ path: '/' });
+    cookie.refresh_token.remove({ path: '/' });
+    cookie.guildId.remove({ path: '/dashboard' });
+    return (set.redirect = '/');
+});
 
 // logoute route
 

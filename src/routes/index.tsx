@@ -17,10 +17,12 @@ const app = new Elysia()
     .use(staticPlugin())
     .error(errors)
     .onError(errorHandler)
-    .get('/', async () => {
+    .get('/', async ({ cookie }) => {
         return (
             <Base>
-                <HomePage />
+                <HomePage
+                    isAuthenticatd={cookie.refresh_token.get() ? true : false}
+                />
             </Base>
         );
     })

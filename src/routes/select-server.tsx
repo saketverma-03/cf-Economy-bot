@@ -1,6 +1,5 @@
 import { getAllCommunityIn } from '@/db/services/communityService';
 import { isAuthenticated } from '@/middlewares/auth';
-import cookieParser from '@/utils/cookieParser';
 import { getUserGuilds } from '@/utils/discord_wrapper/user';
 import Base from '@/views/components/Base';
 import SelectServer from '@/views/pages/selectServer';
@@ -8,16 +7,10 @@ import { Elysia } from 'elysia';
 
 const selectServer = new Elysia();
 
-selectServer.get('/', async (ctx) => {
-    const { headers } = ctx;
-    if (!headers.cookie) {
-        throw new Error('not authorised');
-    }
-    const cookies = cookieParser(headers.cookie);
+selectServer.get('/', async ({ cookie, headers }) => {
+    const { access_token } = cookie;
 
-    if (!cookies.access_token) throw new Error('user un authorised');
-
-    const userGuilds = await getUserGuilds(cookies.access_token);
+    const userGuilds = await getUserGuilds(access_token.get());
     const community = await getAllCommunityIn(
         userGuilds.map((guild) => guild.id),
     );
