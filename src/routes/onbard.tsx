@@ -1,28 +1,18 @@
+import { LoadCommands } from '@/discord/loader';
 import { isAuthenticated } from '@/middlewares/auth';
-import cookieParser from '@/utils/cookieParser';
-import { getUserData } from '@/utils/discord_wrapper/user';
-import Base from '@/views/components/Base';
+import { createCommunity } from '@/db/services/communityService';
 import { Elysia } from 'elysia';
 
 const onboard = new Elysia();
 
-onboard.get('/', async (ctx) => {
-    const { headers } = ctx;
+onboard.get('/', async ({ query, set }) => {
+    // TODO: add more steps if required
+    await createCommunity({ guildId: query.guild_id });
+    const guildId = query.guild_id;
+    console.log(guildId);
+    LoadCommands(guildId);
 
-    if (!headers.cookie) {
-        throw new Error('not authorised');
-    }
-    const cookies = cookieParser(headers.cookie);
-    const user = await getUserData(cookies?.access_token);
-    // TODO:update securety
-    // const newCommunity = await createCommunity({ guildId: query.guild_id });
-
-    if (!cookies.access_token) throw new Error('user un authorised');
-    return (
-        <Base>
-            <div>{JSON.stringify(user.username)} </div>
-        </Base>
-    );
+    return (set.redirect = '/dashboard');
 });
 
 export const onBoardRoute = new Elysia().guard(
