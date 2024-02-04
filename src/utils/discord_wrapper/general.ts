@@ -17,5 +17,5 @@ export const discordImage = {
 };
 
 export const generateBotInviteLink = (clinetId: string, guildId: string) => {
-    return `https://discord.com/oauth2/authorize?client_id=${clinetId}&permissions=8&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fonboard&scope=bot&guild_id=${guildId}&disable_guild_select=true`;
+    return `https://discord.com/api/oauth2/authorize?client_id=${clinetId}&permissions=8&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3210%2Fonboard&scope=applications.commands+bot+identify&guild_id=${guildId}&disable_guild_select=true`;
 };
