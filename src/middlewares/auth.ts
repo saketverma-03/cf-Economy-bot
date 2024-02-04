@@ -13,15 +13,19 @@ export const isAuthenticated = async (ctx: ContextBeforeHandle) => {
     const reqPath = `${request.url?.split(headers.host)[1]}`;
 
     if (!refresh_token.get()) {
-        throw new AuthenticationError('AuthenticationError from middleware1');
+        throw new AuthenticationError('No refresh token found in cookie');
     }
 
     if (!access_token.get()) {
         const tokenData = await getAccessTokenFromRefreshToken(
             refresh_token.get(),
         );
-        console.log(tokenData);
-        if (!tokenData) throw new AuthenticationError('Cant get refresh token');
+
+        if (!tokenData)
+            throw new AuthenticationError(
+                'Failed to get refresh token from discord API',
+            );
+
         ctx.cookie.access_token.set({
             value: tokenData.access_token,
             expires: new Date(Date.now() + tokenData.expires_in * 1000),

@@ -1,13 +1,23 @@
+import { config } from '@config/index';
 import { Context } from 'elysia';
-Response;
 
 type ErrorHandlerContext = Context & {
     code: string;
     error: Error;
 };
 
-export const errorHandler = ({ code, error, set }: ErrorHandlerContext) => {
+export const errorHandler = ({
+    code,
+    error,
+    set,
+    request,
+}: ErrorHandlerContext) => {
     //    console.log('ERROR HANDLER TRIGERED');
+    if (config.env.NODE_ENV === 'devlopment') {
+        console.error({ RequestUrl: request.url });
+        console.error(error);
+        console.log(code);
+    }
     switch (code) {
         case 'AuthenticationError':
             return (set.redirect = '/');
@@ -24,3 +34,10 @@ export const errorHandler = ({ code, error, set }: ErrorHandlerContext) => {
     }
     console.log('ERROR', error);
 };
+
+/**
+ *  possible types of errors
+ *  AuthenticationError(message,requestUrl,errorCode)
+ *  BotInteractionError(message,additionalInteraction,errorCode)
+ *  DiscordApiError(message,additionalInfo)
+ * */
