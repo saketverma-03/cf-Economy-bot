@@ -17,9 +17,14 @@ const NavBar = () => {
                             'p-6 bg-gray-700 text-white border hover:border-blue-800'
                         }
                         x-ref="md"
+                        hx-get="/dashboard/ping"
+                        hx-trigger="intersect"
                     >
                         {' '}
                         things{' '}
+                        <h1 class="htmx-indicator animate-bounce">
+                            Loading ...
+                        </h1>
                     </dialog>
                     <div x-show="open" class="fixed h-1/2 w-1/2 bg-blue-950">
                         Dropdown Contents...
@@ -37,9 +42,12 @@ const NavBar = () => {
                     >
                         Bot Settings
                     </a>
-                    <a class="hover:text-red-700 ml-full" href="/logout">
+                    <button
+                        class="hover:text-red-700 ml-full"
+                        hx-delete="/auth"
+                    >
                         Logout
-                    </a>
+                    </button>
                 </div>
             </div>
         </>
