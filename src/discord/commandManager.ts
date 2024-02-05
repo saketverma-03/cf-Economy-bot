@@ -6,8 +6,9 @@ export class CommandManager {
 
     private importCommand(filePath: string) {
         try {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const { default: command } = require(filePath);
-            if ("data" in command && "execute" in command) {
+            if ('data' in command && 'execute' in command) {
                 this.commands.set(command.data.name, command);
             } else {
                 console.log(
@@ -20,7 +21,7 @@ export class CommandManager {
     }
 
     private loadCommands() {
-        const commandFiles = readdirSync("./src/discord/commands");// doubt here in handling path
+        const commandFiles = readdirSync('./src/discord/commands'); // doubt here in handling path
         for (const file of commandFiles) {
             this.importCommand(`./commands/${file}`);
         }
@@ -28,7 +29,7 @@ export class CommandManager {
 
     getCommands() {
         const commandsData = new Collection<string, any>();
-        this.commands.forEach((command, key) => {
+        this.commands.forEach((command) => {
             commandsData.set(command.data.name, command.data.toJSON());
         });
         return commandsData;

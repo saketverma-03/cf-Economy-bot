@@ -1,4 +1,4 @@
-import { isAuthenticated, isGuildIdInCookie } from '@/middlewares/auth';
+import { isAuthenticated } from '@/middlewares/auth';
 import Base from '@/views/components/Base';
 import NavBar from '@/views/components/NavBar';
 import { Elysia } from 'elysia';
@@ -25,11 +25,10 @@ export const botSettingsRoute = new Elysia().guard(
     (app) => app.use(onboard),
 );
 
-const BotSettings = (params) => {
-    const name = 'saket';
+const BotSettings = () => {
     return (
         <>
-            <div class="max-w-6xl w-full p-4">
+            <main id="main" class="max-w-6xl w-full p-4">
                 <h2 class=" mb-4 ">
                     <span class="text-xl">General Settings </span>
                     <span class="mx-2">
@@ -144,7 +143,7 @@ const BotSettings = (params) => {
                         </div>
                     </div>
                 </section>
-            </div>
+            </main>
         </>
     );
 };

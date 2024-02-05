@@ -17,6 +17,8 @@ selectServer.get('/', async ({ cookie, headers }) => {
     const gWithBot = [];
     const gWithoutBot = [];
     let flag = false;
+
+    // NOTE: scope for improvment
     for (const i in userGuilds) {
         flag = false;
         for (const j in community) {
@@ -35,7 +37,7 @@ selectServer.get('/', async ({ cookie, headers }) => {
     }
     return (
         <Base>
-            <SelectServer guilds={userGuilds} communitys={gWithBot} />
+            <SelectServer guilds={gWithoutBot} communitys={gWithBot} />
         </Base>
     );
 });
