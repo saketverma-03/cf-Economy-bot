@@ -12,8 +12,9 @@ import { onBoardRoute } from './onbard';
 import { botSettingsRoute } from './bot-settings.jsx';
 
 const app = new Elysia()
-    // remove html() later no required , manualy add all requrired headers to base
+    // @ts-ignore
     .use(html())
+    // @ts-ignore
     .use(staticPlugin())
     .error(errors)
     .onError(errorHandler)

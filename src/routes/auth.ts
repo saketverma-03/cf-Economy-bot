@@ -3,7 +3,7 @@ import { config } from '@config/index';
 
 const route = new Elysia();
 
-route.get('/', ({ set, headers }) => {
+route.get('/', ({ set }) => {
     return (set.headers['HX-Redirect'] = config.env.OAUTH_URL);
 });
 
@@ -58,12 +58,13 @@ route.get(
     },
 );
 
+// NOTE: this is used as logout command
 route.delete('/', (ctx) => {
     const { cookie, set } = ctx;
     cookie.access_token.remove({ path: '/' });
     cookie.refresh_token.remove({ path: '/' });
     cookie.guildId.remove({ path: '/dashboard' });
-    return (set.redirect = '/');
+    return (set.headers['HX-Redirect'] = '/select-server');
 });
 
 // logoute route
