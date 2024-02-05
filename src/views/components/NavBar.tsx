@@ -13,32 +13,33 @@ const NavBar = () => {
                         switch server
                     </button>
                     <dialog
-                        class={
-                            'p-6 bg-gray-700 text-white border hover:border-blue-800'
-                        }
                         x-ref="md"
+                        class="bg-transparent"
                         hx-get="/dashboard/ping"
                         hx-trigger="intersect"
+                        hx-target="#servers"
                     >
-                        {' '}
-                        things{' '}
-                        <h1 class="htmx-indicator animate-bounce">
-                            Loading ...
-                        </h1>
+                        <div
+                            class={'p-4 grid gap-2 bg-zinc-900 text-white'}
+                            id="servers"
+                        >
+                            <h1 class="htmx-indicator animate-bounce">
+                                Loading ...
+                            </h1>
+                        </div>
                     </dialog>
-                    <div x-show="open" class="fixed h-1/2 w-1/2 bg-blue-950">
-                        Dropdown Contents...
-                    </div>
+
                     <a
                         class="hover:text-zinc-100 px-2 py-1 rounded hover:bg-zinc-800"
                         href="/dashboard"
+                        hx-target="#main"
                     >
                         DashBoard
                     </a>
                     <a
                         class="hover:text-zinc-100 px-2 py-1 text-zinc-400 rounded hover:bg-zinc-800"
                         href="/bot-settings"
-                        hx-target="main"
+                        hx-target="#main"
                     >
                         Bot Settings
                     </a>
