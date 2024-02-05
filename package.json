@@ -1,33 +1,39 @@
 {
-  "name": "eco-bot",
-  "version": "1.0.50",
-  "scripts": {
-    "lint:fix": "biome lint ./src",
-    "dev": "concurrently \"bun run --hot ./src/index.ts\" \"bun run postcss:dev\" \"bun run liveReload\"",
-    "liveReload": "bun run ./hotreloadWeb.ts",
-    "format:fix": "bunx @biomejs/biome format ./src --write",
-    "postcss:dev": "postcss ./src/views/components/main.css -o ./public/dist/index.css --watch",
-    "postcss:build": "postcss ./src/views/components/main.css -o ./public/dist/index.css --watch"
-  },
-  "dependencies": {
-    "@elysiajs/html": "^0.8.0",
-    "@elysiajs/jwt": "^0.8.0",
-    "@elysiajs/static": "^0.8.1",
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
-    "@typescript-eslint/parser": "^6.19.0",
-    "elysia": "^0.8.15",
-    "mongoose": "^8.0.4"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.4.1",
-    "@types/node": "^20.10.6",
-    "autoprefixer": "^10.4.16",
-    "biome": "^0.3.3",
-    "bun-types": "latest",
-    "concurrently": "^8.2.2",
-    "postcss-cli": "^11.0.0",
-    "tailwindcss": "^3.4.0",
-    "typescript": "^5.3.3"
-  },
-  "module": "src/index.js"
+    "name": "eco-bot",
+    "version": "1.0.50",
+    "scripts": {
+        "dev": "concurrently \"bun run --hot ./src/index.ts\" \"bun run postcss:dev\" \"bun run liveReload\"",
+        "liveReload": "bun run ./hotreloadWeb.ts",
+        "postcss:dev": "postcss ./src/views/components/main.css -o ./public/dist/index.css --watch",
+        "postcss:build": "postcss ./src/views/components/main.css -o ./public/dist/index.css --watch",
+        "prepare": "husky"
+    },
+    "lint-staged": {
+        "src/**/*.{ts,tsx,html,css}": "prettier --write",
+        "src/**/*.{ts,tsx}": "eslint"
+    },
+    "dependencies": {
+        "@elysiajs/html": "^0.8.0",
+        "@elysiajs/jwt": "^0.8.0",
+        "@elysiajs/static": "^0.8.1",
+        "discord.js": "^14.14.1",
+        "elysia": "^0.8.15",
+        "mongoose": "^8.0.4"
+    },
+    "devDependencies": {
+        "@types/node": "^20.10.6",
+        "@typescript-eslint/eslint-plugin": "^6.19.0",
+        "@typescript-eslint/parser": "^6.19.0",
+        "autoprefixer": "^10.4.16",
+        "bun-types": "latest",
+        "concurrently": "^8.2.2",
+        "eslint": "^8.56.0",
+        "husky": "^9.0.10",
+        "lint-staged": "^15.2.1",
+        "postcss-cli": "^11.0.0",
+        "prettier": "3.2.5",
+        "tailwindcss": "^3.4.0",
+        "typescript": "^5.3.3"
+    },
+    "module": "src/index.js"
 }
