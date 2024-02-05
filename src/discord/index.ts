@@ -7,14 +7,12 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 export const commandManager = new CommandManager();
 
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user?.tag}!`);
+    console.log(`Logged in as ${client.user?.tag}!`);
 });
 
-
-client.on('interactionCreate', async interaction => {
-  commandListener(interaction, commandManager); 
+client.on('interactionCreate', async (interaction) => {
+    commandListener(interaction, commandManager);
 });
 
 export const logintoBot = async () => client.login(config.env.BOT_TOKEN);
 export default client;
-
