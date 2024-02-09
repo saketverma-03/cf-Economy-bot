@@ -31,7 +31,7 @@ const Base = (props: Html.PropsWithChildren) => {
 
                 <body
                     hx-boost="true"
-                    class="min-h-screen font-geist w-full bg-zinc-900 text-foreground flex flex-col items-center "
+                    class="min-h-screen font-geist w-full bg-background text-foreground flex flex-col items-center "
                 >
                     {props.children}
                 </body>
