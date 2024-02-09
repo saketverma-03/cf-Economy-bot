@@ -17,10 +17,16 @@ export default function HomePage(props: { isAuthenticatd: boolean }) {
                     dashboard issssat
                 </a>
             )}
+            <a
+                class="rounded bg-primary text-secondary px-3 py-2 hover:bg-primary/80"
+                href="/select-server"
+            >
+                select -server
+            </a>
 
             <a
                 hx-get="/auth"
-                class="rounded bg-primary px-3 py-2 hover:bg-primary/80"
+                class="rounded bg-primary text-secondary px-3 py-2 hover:bg-primary/80"
                 hx-target="body"
             >
                 Login

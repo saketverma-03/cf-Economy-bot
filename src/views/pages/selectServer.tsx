@@ -53,7 +53,7 @@ const ServerCard = ({ guild }: { guild: Guild }) => {
         <>
             <a
                 href={generateBotInviteLink(config.env.DISCORD_CLIENT_ID, id)}
-                class={`bg-zinc-800 p-2 gap-4 rounded flex items-center border border-transparent gra hover:border-primary  ${isAdmin ? ' ' : 'pointer-events-none'} `}
+                class={`bg-card  border-border  p-2 gap-4 rounded flex items-center border hover:border-primary  ${isAdmin ? ' ' : 'pointer-events-none'} `}
             >
                 <div
                     class={`h-16 w-16 grid place-items-center ${isAdmin ? '' : 'grayscale opacity-50'}`}
@@ -94,7 +94,8 @@ const BotServerCard = ({ guild }: { guild: Guild }) => {
         <>
             <a
                 href={`/dashboard/redirect?id=${guild.id}`}
-                class={`bg-zinc-800 p-2 gap-4 rounded flex items-center border border-transparent gra hover:border-primary  ${isAdmin ? ' ' : 'pointer-events-none'} `}
+                hx-boost="false"
+                class={`bg-card border-border transition-colors p-2 gap-4 rounded flex items-center border hover:border-primary  ${isAdmin ? ' ' : 'pointer-events-none'} `}
             >
                 <div
                     class={`h-16 w-16 grid place-items-center ${isAdmin ? '' : 'grayscale opacity-50'}`}
@@ -107,7 +108,7 @@ const BotServerCard = ({ guild }: { guild: Guild }) => {
                             alt=""
                         />
                     ) : (
-                        <div class="h-full w-full rounded grid place-items-center bg-zinc-900">
+                        <div class="h-full w-full rounded grid place-items-center bg-gradient-to-tr from-green-300/50 to-cyan-400 dark:from-green-950/50 dark:to-cyan-950 ">
                             {name[0] + name[2]}
                         </div>
                     )}
