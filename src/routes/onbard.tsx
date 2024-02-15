@@ -1,6 +1,6 @@
 import { LoadCommands } from '@/discord/loader';
 import { isAuthenticated } from '@/middlewares/auth';
-import { createCommunity } from '@/db/services/communityService';
+import { createCommunity } from '@/services/community';
 import { Elysia, t } from 'elysia';
 
 const onboard = new Elysia();

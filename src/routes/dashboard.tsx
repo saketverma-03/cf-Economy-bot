@@ -1,6 +1,6 @@
-import { getAllCommunityIn } from '@/db/services/communityService';
+import { getAllCommunityIn } from '@/selector/community';
 import { isAuthenticated } from '@/middlewares/auth';
-import { getUserGuilds } from '@/utils/discord_wrapper/user';
+import { getUserGuilds } from '@/selector/discord/user';
 import Base from '@/views/components/Base';
 import NavBar from '@/views/components/NavBar';
 import { SelectServerCard } from '@/views/components/selectServerCard';
@@ -8,9 +8,11 @@ import Dashboard from '@/views/pages/Dashboard';
 import { Elysia, t } from 'elysia';
 
 const route = new Elysia();
-route.get('/ping', async ({ cookie }) => {
+// TODO: make proper route
+route.get('/ping', async ({ cookie, set }) => {
     const { access_token } = cookie;
 
+    set.headers['Cache-Control'] = 'private, max-age=5 ,stale-while-revalidate';
     const userGuilds = await getUserGuilds(access_token.get());
     const community = await getAllCommunityIn(
         userGuilds.map((guild) => guild.id),
@@ -58,6 +60,7 @@ route.get(
     ({ query, cookie, set }) => {
         cookie.guildId.set({
             value: query.id,
+            path: '/',
         });
 
         set.redirect = '/dashboard';

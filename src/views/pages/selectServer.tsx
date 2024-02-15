@@ -1,10 +1,7 @@
 //
 
-import {
-    discordImage,
-    generateBotInviteLink,
-} from '@/utils/discord_wrapper/general';
-import { Guild, isGuildAdmmin } from '@/utils/discord_wrapper/user';
+import { discordImage, generateBotInviteLink } from '@/utils/discord';
+import { Guild, isGuildAdmmin } from '@/selector/discord/user';
 import { config } from '@config/index';
 
 export default function Page({
