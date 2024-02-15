@@ -10,6 +10,7 @@ import { errors } from '@/middlewares/errorHandler/types';
 import { selectServerRoute } from './select-server';
 import { onBoardRoute } from './onbard';
 import { botSettingsRoute } from './bot-settings.jsx';
+import permRoutes from './community/permission';
 
 const app = new Elysia()
     // @ts-ignore
@@ -31,6 +32,7 @@ const app = new Elysia()
     .group('/select-server', (route) => route.use(selectServerRoute))
     .group('/onboard', (route) => route.use(onBoardRoute))
     .group('/bot-settings', (route) => route.use(botSettingsRoute))
-    .group('/auth', (route) => route.use(authRoute));
+    .group('/auth', (route) => route.use(authRoute))
+    .group('/community/permisions', (route) => route.use(permRoutes));
 
 export default app;

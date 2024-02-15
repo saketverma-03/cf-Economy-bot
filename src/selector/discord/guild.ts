@@ -1,23 +1,36 @@
-/*TODO:
- *  update user
- * update Users Roles,
- * creat guild roles
- * modify guild role Position
- *
- * **/
+import { Role, GuilldMember, GuildDetails } from './types';
 
-export const getGuildDetails = async (botToken: string, guildId: string) => {
+export async function getGuildDetails(botToken: string, guildId: string) {
     const res = await fetch(`https://discord.com/api/v10/guilds/${guildId}`, {
         method: 'GET',
         headers: {
             Authorization: `Bot ${botToken}`,
         },
     });
+    console.log('in api', res);
     if (!res.ok) return {};
     return res.json();
-};
+}
 
-export const getGuildMembers = async (botToken: string, guildId: string) => {
+export async function getGuildRoles(
+    botToken: string,
+    guildId: string,
+): Promise<Role[]> {
+    const res = await fetch(
+        `https://discord.com/api/v10/guilds/${guildId}/roles`,
+        {
+            method: 'GET',
+            headers: {
+                Authorization: `Bot ${botToken}`,
+            },
+        },
+    );
+    console.log('in api', res);
+    if (!res.ok) return [];
+    return res.json() as Promise<Role[]>;
+}
+
+export async function getGuildMembers(botToken: string, guildId: string) {
     const res = await fetch(
         `https://discord.com/api/v10/guilds/${guildId}/members`,
         {
@@ -27,16 +40,15 @@ export const getGuildMembers = async (botToken: string, guildId: string) => {
             },
         },
     );
-    if (!res.ok) return [];
-    return res.json();
-};
+    if (!res.ok) return undefined;
+    return res.json() as Promise<GuildDetails>;
+}
 
-// TODO: decalre res type
-export const getGuildMemberById = async (
+export async function getGuildMemberById(
     botToken: string,
     guildId: string,
     userId: string,
-) => {
+) {
     const res = await fetch(
         `https://discord.com/api/v10/guilds/${guildId}/members/${userId}`,
         {
@@ -47,16 +59,16 @@ export const getGuildMemberById = async (
         },
     );
     if (!res.ok) return;
-    return res.json();
-};
+    return res.json() as Promise<GuilldMember>;
+}
 
 // TODO: implement caching
-export const searchGuildMember = async (
+export async function searchGuildMember(
     botToken: string,
     searchTerm: string,
     limit: number = 20,
     guildId: string,
-) => {
+) {
     if (limit > 1000) {
         throw new Error('limit should be between 1-1000');
     }
@@ -72,23 +84,4 @@ export const searchGuildMember = async (
 
     if (!res.ok) return [];
     return res.json();
-};
-
-export const addMultipleRoleToUser = async (
-    botToken: string,
-    guildId: string,
-    userId: string,
-    roles: string[] | number[],
-) => {
-    const res = await fetch(
-        `https://discord.com/api/v10/guilds/${guildId}/members`,
-        {
-            method: 'GET',
-            headers: {
-                Authorization: `Bot ${botToken}`,
-            },
-        },
-    );
-    if (!res.ok) return;
-    return res.json();
-};
+}

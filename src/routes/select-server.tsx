@@ -1,13 +1,13 @@
-import { getAllCommunityIn } from '@/db/services/communityService';
+import { getAllCommunityIn } from '@/selector/community';
 import { isAuthenticated } from '@/middlewares/auth';
-import { getUserGuilds } from '@/utils/discord_wrapper/user';
+import { getUserGuilds } from '@/selector/discord/user';
 import Base from '@/views/components/Base';
 import SelectServer from '@/views/pages/selectServer';
 import { Elysia } from 'elysia';
 
 const selectServer = new Elysia();
 
-selectServer.get('/', async ({ cookie, headers }) => {
+selectServer.get('/', async ({ cookie, headers, set }) => {
     const { access_token } = cookie;
 
     const userGuilds = await getUserGuilds(access_token.get());
@@ -35,6 +35,8 @@ selectServer.get('/', async ({ cookie, headers }) => {
     if (headers['HX-Boosted']) {
         return <SelectServer guilds={gWithoutBot} communitys={gWithBot} />;
     }
+
+    set.headers['Cache-Control'] = 'private, max-age=5 ,stale-while-revalidate';
     return (
         <Base>
             <SelectServer guilds={gWithoutBot} communitys={gWithBot} />

@@ -1,5 +1,5 @@
-import { discordImage } from '@/utils/discord_wrapper/general';
-import { Guild } from '@/utils/discord_wrapper/user';
+import { discordImage } from '@/utils/discord';
+import { Guild } from '@/selector/discord/user';
 
 export const SelectServerCard = ({ guild }: { guild: Guild }) => {
     const { id, name, icon } = guild;

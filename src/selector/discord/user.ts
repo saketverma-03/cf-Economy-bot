@@ -15,9 +15,9 @@ export interface IUserDataResponse {
 /**
  * @description fetch and returns user data from discord using accessToken
  * */
-export const getUserData = async (
+export async function getUserData(
     accessToken: string,
-): Promise<IUserDataResponse> => {
+): Promise<IUserDataResponse> {
     const res = await fetch('https://discord.com/api/users/@me', {
         headers: {
             authorization: `Bearer ${accessToken}`,
@@ -30,7 +30,7 @@ export const getUserData = async (
         );
     }
     return res.json() as PromiseLike<IUserDataResponse>;
-};
+}
 
 export interface Guild {
     id: string;
@@ -42,7 +42,7 @@ export interface Guild {
     features: string[];
 }
 
-export const getUserGuilds = async (access_token: string): Promise<Guild[]> => {
+export async function getUserGuilds(access_token: string): Promise<Guild[]> {
     return await fetch('https://discord.com/api/users/@me/guilds', {
         method: 'GET',
         headers: {
@@ -52,7 +52,7 @@ export const getUserGuilds = async (access_token: string): Promise<Guild[]> => {
     })
         .then((response) => response.json() as Promise<Guild[]>)
         .catch(() => []);
-};
+}
 
 // https://discord.com/developers/docs/topics/permissions
 export const isGuildAdmmin = (permissions: number): boolean =>

@@ -8,6 +8,7 @@ const CommunitySchema = new mongoose.Schema(
         balance: { type: Number, default: 100000 },
         taxPerTransaction: { type: Number, default: false },
         managerRoles: [String],
+        rolesPerms: { type: Map, of: String },
     },
     { timestamps: true },
 );

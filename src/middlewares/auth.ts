@@ -1,7 +1,7 @@
 import { Context } from 'elysia';
 import { AuthenticationError } from './errorHandler/types';
-import { IUserDataResponse } from '@/utils/discord_wrapper/user';
-import { getAccessTokenFromRefreshToken } from '@/utils/discord_wrapper/oauth';
+import { IUserDataResponse } from '@/selector/discord/user';
+import { getAccessTokenFromRefreshToken } from '@/selector/discord/oauth';
 
 export interface ContextBeforeHandle extends Omit<Context, 'params'> {
     params: Record<never, string>;
