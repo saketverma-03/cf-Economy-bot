@@ -19,8 +19,9 @@ export const errorHandler = ({
         console.log(code);
     }
     switch (code) {
-        case 'AuthenticationError':
+        case 'AuthenticationError': {
             return (set.redirect = '/');
+        }
 
         default:
             return Response.json(
@@ -29,7 +30,7 @@ export const errorHandler = ({
                     error: 'uknown error',
                     hello: 'default error',
                 },
-                { status: 400 },
+                { status: 500 },
             );
     }
     console.log('ERROR', error);

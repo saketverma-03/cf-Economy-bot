@@ -16,7 +16,8 @@ export const getComRolePerms = async (
 
     if (!data) throw new Error('Comminity Not found');
     if (!data.rolesPerms) {
-        throw new Error('service layer error, no perms ');
+        // returns empty map
+        return new Map();
     }
     return data.rolesPerms;
 };
