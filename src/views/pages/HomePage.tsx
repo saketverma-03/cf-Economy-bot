@@ -10,25 +10,18 @@ export default function HomePage(props: { isAuthenticatd: boolean }) {
             {isAuthenticatd && (
                 <a
                     href="/dashboard"
-                    class="rounded bg-primary px-3 py-2 hover:bg-primary/80"
+                    class="btn"
                     hx-target="body"
                     hx-boost="false"
                 >
                     dashboard issssat
                 </a>
             )}
-            <a
-                class="rounded bg-primary text-secondary px-3 py-2 hover:bg-primary/80"
-                href="/select-server"
-            >
+            <a class="btn btn-secondary" href="/select-server">
                 select -server
             </a>
 
-            <a
-                hx-get="/auth"
-                class="rounded bg-primary text-secondary px-3 py-2 hover:bg-primary/80"
-                hx-target="body"
-            >
+            <a hx-get="/auth" class="btn btn-primary" hx-target="body">
                 Login
             </a>
         </main>
