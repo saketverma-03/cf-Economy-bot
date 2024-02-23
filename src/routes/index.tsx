@@ -33,6 +33,6 @@ const app = new Elysia()
     .group('/onboard', (route) => route.use(onBoardRoute))
     .group('/bot-settings', (route) => route.use(botSettingsRoute))
     .group('/auth', (route) => route.use(authRoute))
-    .group('/community/permisions', (route) => route.use(permRoutes));
+    .group('/community/permissions', (route) => route.use(permRoutes));
 
 export default app;
