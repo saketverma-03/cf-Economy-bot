@@ -1,4 +1,5 @@
 export default function BotSettings() {
+    const commands = ['commandX', 'commandY'];
     return (
         <>
             <main id="main" class="max-w-6xl w-full p-4">
@@ -10,26 +11,23 @@ export default function BotSettings() {
                         </span>
                     </h2>
                     <div x-data={'permsData'}>
-                        <button x-on:click="roles.push('extra')">lol</button>
+                        <button
+                            class="btn btn-primary my-2"
+                            x-on:click="handleSubmit"
+                        >
+                            save changes
+                        </button>
                         <div class="grid grid-cols-1 md:grid-cols-2  gap-4">
-                            <template x-for="(role ,index) in roles">
+                            <template x-for="[id, value] in Object.entries(roles.perms)">
                                 <div class="bg-card p-4 rounded-xl border border-border">
                                     <h1
-                                        class="text-xl  mb-2"
-                                        x-text="role"
+                                        class="text-xl mb-2"
+                                        x-text="getNameById(id)"
                                     ></h1>
-                                    {/*add commands manuall here*/}
                                     <div class="flex gap-2 ">
-                                        <div class="flex  w-fit has-[:checked]:bg-green-800 items-center border border-zinc-800 rounded-md ">
-                                            <label
-                                                x-bind:for="role+'p2'"
-                                                class="text-sm block p-2 accent-red-600 font-medium rounded "
-                                                x-bind:class="!perms.get(role).includes('s') ? '' : 'bg-green-800'"
-                                                x-on:click="() => toogleProperty(role,'s')"
-                                            >
-                                                Checked state
-                                            </label>
-                                        </div>
+                                        {commands.map((item) => (
+                                            <Btn action={item} />
+                                        ))}
                                     </div>
                                 </div>
                             </template>
@@ -40,3 +38,17 @@ export default function BotSettings() {
         </>
     );
 }
+
+const Btn = ({ action }: { action: string }) => {
+    return (
+        <>
+            <label
+                class="text-sm block border border-border p-2 accent-red-600 font-medium rounded-xl "
+                x-bind:class={`!value.includes('${action}') ? 'opacity-60' : 'bg-green-800'`}
+                x-on:click={`() => toogleProperty(id,'${action}')`}
+            >
+                {action}{' '}
+            </label>
+        </>
+    );
+};

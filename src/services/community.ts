@@ -1,8 +1,10 @@
 import community from '@/db/models/community';
-import { getComRolePerms } from '@/selector/community';
-import { getGuildMemberById } from '@/selector/discord/guild';
-import { actions, checkActoinVal } from '@/utils/permmissions';
-import { config } from '@config/index';
+
+/*TODO:
+ * - createCommunity
+ * - updateCommunity
+ * - getCommunity
+ * */
 
 export type CreateCommunityProps = {
     guildId: string; //guildId
@@ -11,8 +13,13 @@ export type CreateCommunityProps = {
     currencyName?: string;
     managerRoles?: string[];
 };
-
 export const createCommunity = (props: CreateCommunityProps) => {
+    const tempData = { ...props, _id: '' };
+    tempData._id = tempData.guildId;
+
+    // TODO: chekc if this works
+    tempData.guildId = '';
+
     const newCommunity = new community({
         _id: props.guildId,
     });
@@ -32,28 +39,28 @@ export const updateCommunityById = (
     updatedData: Omit<CreateCommunityProps, 'guildId'>,
 ) => updateCommunityByGuildId(id, updatedData);
 
-export async function isPermmitedAction(
-    guildId: string,
-    userId: string,
-    actionType: string,
+// TODO: update when making new permissions page;
+export async function updateCommunityPerms(
+    guidlId: string,
+    newPerms: Map<string, string>,
 ) {
-    const user = await getGuildMemberById(
-        config.env.BOT_TOKEN,
-        guildId,
-        userId,
-    );
-    if (!user) {
-        throw new Error('user not found in guild');
-    }
-    const roleIds = user.roles.map((role) => role.id);
-    const rolePerms = await getComRolePerms(guildId);
-    const actionVal = actions[actionType];
-
-    for (const id of roleIds) {
-        const temp = rolePerms.get(id);
-        if (temp && checkActoinVal(actionVal, temp)) {
-            return true;
-        }
-    }
-    return false;
+    return await community.findByIdAndUpdate(guidlId, {
+        rolesPerms: newPerms,
+    });
 }
+
+// export async function isPermmitedAction(guildId, userId, actionType) {
+//   const user = await getGuildMemberById(
+//       config.env.BOT_TOKEN,
+//       guildId,
+//       userId,
+//   );
+//   if (!user) {
+//       throw new Error('user not found in guild');
+//   }
+//   const roleIds = user.roles.map((role) => role.id);
+//   const rolePerms = await getComRolePerms(guildId);
+//   for( id of roleIds){
+//
+// }
+//

@@ -35,7 +35,7 @@ const NavBar = () => {
                         hx-get="/dashboard/ping"
                         hx-trigger="intersect"
                         hx-target="#servers"
-                        class="rounded-xl p-4 dark:backdrop:bg-card text-foreground bg-card border border-border "
+                        class="rounded-xl p-4 dark:backdrop:bg-background/80 text-foreground bg-card border border-border "
                     >
                         <div class={''}>
                             <h1 class="mb-4">Select a Server</h1>
