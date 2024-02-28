@@ -7,7 +7,6 @@ export async function getGuildDetails(botToken: string, guildId: string) {
             Authorization: `Bot ${botToken}`,
         },
     });
-    console.log('in api', res);
     if (!res.ok) return {};
     return res.json();
 }
@@ -25,7 +24,6 @@ export async function getGuildRoles(
             },
         },
     );
-    console.log('in api', res);
     if (!res.ok) return [];
     return res.json() as Promise<Role[]>;
 }
