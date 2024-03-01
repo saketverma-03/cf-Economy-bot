@@ -32,5 +32,5 @@ export const genCombinedActionVal = (names: ActionName[]): string => {
     return newPerm.toString();
 };
 
-export const checkActoinVal = (actionVal: string, testFor: string): boolean =>
-    (BigInt(actionVal) & BigInt(testFor)) === BigInt(testFor);
+export const isActPermitted = (curPerms: string, checkFor: string): boolean =>
+    (BigInt(curPerms) & BigInt(checkFor)) === BigInt(checkFor);
