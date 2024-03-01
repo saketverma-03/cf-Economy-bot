@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
-    checkActoinVal,
     expandCombinedActionVal,
     genCombinedActionVal,
+    isActPermitted,
 } from './permmissions';
 
 describe('Testing Permmision Utils', () => {
@@ -28,8 +28,8 @@ describe('Testing Permmision Utils', () => {
     });
 
     it('Verify if permission combined value has specific permmision', () => {
-        expect(checkActoinVal('6', '2')).toBe(true);
-        expect(checkActoinVal('6', '4')).toBe(true);
-        expect(checkActoinVal('6', '32')).toBe(false);
+        expect(isActPermitted('6', '2')).toBe(true);
+        expect(isActPermitted('6', '4')).toBe(true);
+        expect(isActPermitted('6', '32')).toBe(false);
     });
 });
